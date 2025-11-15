@@ -1,73 +1,128 @@
-# React + TypeScript + Vite
+# Blockchain Explorer Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, cyberpunk-themed React frontend for exploring blockchain transactions and mining operations.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Real-time Blockchain Explorer**: View blocks, transactions, and chain validation status
+- **Interactive Mining**: Mine new blocks with proof-of-work algorithm
+- **Balance Checking**: Query account balances instantly
+- **Transaction Processing**: Add and process transactions in real-time
+- **Responsive Design**: Optimized for desktop and mobile devices
+- **Toast Notifications**: Professional notification system replacing browser alerts
+- **Cyberpunk UI**: Dark theme with neon accents and smooth animations
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19** with TypeScript
+- **Vite** for fast development and building
+- **CSS3** with custom properties and animations
+- **REST API** integration with Rust backend
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Prerequisites**
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+   ```bash
+   Node.js 18+
+   npm or yarn
+   ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+2. **Install Dependencies**
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+   ```bash
+   npm install
+   ```
+
+3. **Start Development Server**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for Production**
+
+   ```bash
+   npm run build
+   ```
+
+## How to Use
+
+### Navigation
+
+- **Explorer**: Main blockchain interface
+- **How to Use**: Interactive guide and documentation
+
+### Blockchain Operations
+
+1. **Check Balances**: Enter any address (try "miner-address", "user-1", "user-2")
+2. **Add Transactions**: Fill sender, receiver, and amount fields
+3. **Mine Blocks**: Click "Mine Block" to process pending transactions
+4. **Explore Chain**: Scroll through blocks and view transaction details
+
+### Mobile Experience
+
+- Balance and transaction forms appear first
+- Blockchain explorer follows below
+- Touch-optimized interface
+
+## Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+### Project Structure
+
+```frontend/
+├── src/
+│   ├── App.tsx          # Main application component
+│   ├── App.css          # Styles and cyberpunk theme
+│   └── main.tsx         # Application entry point
+├── package.json         # Dependencies and scripts
+└── README.md           # This file
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Key Components
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Toast Notifications**: Slide-in alerts with auto-dismiss
+- **Card System**: Glassmorphism design with hover effects
+- **Responsive Grid**: Adaptive layouts for all screen sizes
+- **Cyberpunk Animations**: Subtle effects without distraction
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## API Integration
+
+Connects to Rust backend via REST API:
+
+- `GET /blocks` - Fetch blockchain data
+- `GET /balance/:address` - Check account balance
+- `POST /transaction` - Add new transaction
+- `POST /mine` - Mine new block
+- `GET /chain/valid` - Validate chain integrity
+
+## Responsive Design
+
+- **Desktop**: Side-by-side layout with full feature access
+- **Tablet**: Single column with prioritized content
+- **Mobile**: Touch-friendly interface with logical content flow
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is open source and available under the MIT License.
+
+## Links
+
+- [Backend Repository](../backend/)
+- [Live Demo](https://blockchain.joat.website)
+- [API Documentation](../backend/README.md)
