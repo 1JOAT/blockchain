@@ -146,7 +146,7 @@ function App() {
       }
     } catch (error) {
       console.error('Failed to mine block:', error)
-      showToast('Failed to mine block. Check console for details.', 'error')
+      showToast('Failed to mine block. Try again later', 'error')
     } finally {
       setIsMining(false)
     }
