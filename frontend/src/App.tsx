@@ -163,8 +163,7 @@ function App() {
       setLoading(false)
     }
     initialize()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address])
+  }, [])
 
   useEffect(() => {
     fetchBalance(address)
