@@ -219,14 +219,14 @@ function App() {
             <span></span>
             <span></span>
           </button>
-          <h1>Blockchain Explorer</h1>
+          <h1>Blockchain v2</h1>
           {currentPage === 'explorer' && (
             <button
               onClick={mineBlock}
               disabled={isMining}
-              className="btn-secondary mine-btn-header mobile-mine-btn"
+              className={`btn-secondary mine-btn-header ${isMining ? 'is-mining' : ''}`}
             >
-              {isMining ? 'Mining...' : 'Mine Block'}
+              {isMining ? 'Mining Block...' : 'Mine New Block'}
             </button>
           )}
         </div>
