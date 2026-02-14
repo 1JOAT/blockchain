@@ -1,5 +1,5 @@
 # ---------- Stage 1: Build ----------
-FROM rust:1.74 as builder
+FROM rust:1.85 AS builder
 WORKDIR /app
 
 # Copy the entire backend folder

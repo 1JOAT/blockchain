@@ -58,3 +58,35 @@ impl Block {
         self.nonce = nonce;
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_genesis_block() {
+        let genesis = Block::genesis();
+        assert_eq!(genesis.index, 0);
+        assert_eq!(genesis.previous_hash, "0");
+        assert!(genesis.transactions.is_empty());
+    }
+
+    #[test]
+    fn test_calculate_hash() {
+        let block = Block::new(1, vec![], "prev_hash".to_string());
+        let hash1 = block.calculate_hash();
+        let hash2 = block.calculate_hash();
+        assert_eq!(hash1, hash2);
+    }
+
+    #[test]
+    fn test_unique_hash_with_transactions() {
+        let tx1 = Transaction::new("a".to_string(), "b".to_string(), 10);
+        let tx2 = Transaction::new("a".to_string(), "b".to_string(), 20);
+        
+        let block1 = Block::new(1, vec![tx1], "prev".to_string());
+        let block2 = Block::new(1, vec![tx2], "prev".to_string());
+        
+        assert_ne!(block1.hash, block2.hash);
+    }
+}

@@ -1,6 +1,8 @@
 mod blockchain;
 mod api;
 mod storage;
+mod errors;
+mod handlers;
 
 use std::sync::Arc;
 use tokio::sync::Mutex;

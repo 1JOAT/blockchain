@@ -126,3 +126,69 @@ impl Blockchain {
         store.load_blockchain()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_new_blockchain() {
+        let bc = Blockchain::new();
+        assert_eq!(bc.chain.len(), 1);
+        assert_eq!(bc.difficulty, 2);
+    }
+
+    #[test]
+    fn test_add_transaction() {
+        let mut bc = Blockchain::new_with_difficulty(1);
+        
+        // Give some balance to user1 by mining
+        bc.mine_pending_transactions("user1".to_string());
+        assert_eq!(bc.get_balance("user1"), 100);
+
+        let tx = Transaction::new("user1".to_string(), "user2".to_string(), 50);
+        assert!(bc.add_transaction(tx).is_ok());
+        assert_eq!(bc.pending_transactions.len(), 1);
+        
+        // Pending transaction should be reflected in balance
+        assert_eq!(bc.get_balance("user1"), 50);
+    }
+
+    #[test]
+    fn test_invalid_transaction_amount() {
+        let mut bc = Blockchain::new();
+        let tx = Transaction::new("user1".to_string(), "user2".to_string(), 0);
+        let res = bc.add_transaction(tx);
+        assert!(res.is_err());
+        assert_eq!(res.unwrap_err(), "Transaction amount must be greater than 0");
+    }
+
+    #[test]
+    fn test_insufficient_balance() {
+        let mut bc = Blockchain::new();
+        let tx = Transaction::new("user1".to_string(), "user2".to_string(), 100);
+        let res = bc.add_transaction(tx);
+        assert!(res.is_err());
+        assert_eq!(res.unwrap_err(), "Not enough balance");
+    }
+
+    #[test]
+    fn test_chain_validity() {
+        let mut bc = Blockchain::new_with_difficulty(1);
+        bc.mine_pending_transactions("miner".to_string());
+        bc.mine_pending_transactions("miner".to_string());
+        
+        assert!(bc.is_chain_valid());
+
+        // Tamper with chain
+        bc.chain[1].transactions[0].amount = 1000;
+        assert!(!bc.is_chain_valid());
+    }
+
+    #[test]
+    fn test_mining_reward() {
+        let mut bc = Blockchain::new_with_difficulty(1);
+        bc.mine_pending_transactions("miner".to_string());
+        assert_eq!(bc.get_balance("miner"), 100);
+    }
+}
