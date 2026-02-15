@@ -118,11 +118,11 @@ function App() {
         showToast('Transaction added successfully!', 'success')
         fetchBlocks()
       } else {
-        showToast(`Error: ${data.error}`, 'error')
+        showToast(data.error || 'Failed to add transaction. Please try again.', 'error')
       }
     } catch (error) {
       console.error('Failed to add transaction:', error)
-      showToast('Failed to add transaction. Check console for details.', 'error')
+      showToast('Network error: Could not add transaction. | Insufficient balance', 'error')
     }
   }
 
@@ -142,11 +142,11 @@ function App() {
         fetchBalance(address)
         checkChainValidity()
       } else {
-        showToast(`Error: ${data.error}`, 'error')
+        showToast(data.error || 'Failed to mine block.', 'error')
       }
     } catch (error) {
       console.error('Failed to mine block:', error)
-      showToast('Failed to mine block. Try again later', 'error')
+      showToast('Network error: Mining failed. Please try again.', 'error')
     } finally {
       setIsMining(false)
     }
@@ -167,7 +167,7 @@ function App() {
 
   useEffect(() => {
     fetchBalance(address)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
   const showToast = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
@@ -208,6 +208,16 @@ function App() {
 
   return (
     <div className="app">
+      {/* Toast Notifications */}
+      <div className="toast-container">
+        {toasts.map((toast) => (
+          <div key={toast.id} className={`toast toast-${toast.type}`}>
+            <span className="toast-message">{toast.message}</span>
+            <button onClick={() => removeToast(toast.id)} className="toast-close" aria-label="Close">×</button>
+          </div>
+        ))}
+      </div>
+
       <header className="header">
         <div className="header-main">
           <button
@@ -249,37 +259,11 @@ function App() {
           >
             How to Use
           </button>
-          {/* {currentPage === 'explorer' && (
-            <>
-              <button
-                onClick={() => {
-                  scrollToLatestTransaction()
-                  setMobileNavOpen(false)
-                }}
-                className="nav-btn"
-              >
-                Latest Block
-              </button>
-              <div className={`nav-status ${chainValid ? 'valid' : 'invalid'}`}>
-                Chain Status: {chainValid ? 'Valid' : 'Invalid'}
-              </div>
-            </>
-          )} */}
           <a href="https://github.com/1JOAT/blockchain" target="_blank" rel="noopener noreferrer" className="nav-btn github-nav-btn">
             GitHub
           </a>
         </nav>
       </header>
-
-      {/* Toast Notifications */}
-      <div className="toast-container">
-        {toasts.map((toast) => (
-          <div key={toast.id} className={`toast toast-${toast.type}`}>
-            <span>{toast.message}</span>
-            <button onClick={() => removeToast(toast.id)} className="toast-close">×</button>
-          </div>
-        ))}
-      </div>
 
       {currentPage === 'explorer' ? (
         <div className="container">
